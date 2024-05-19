@@ -21,7 +21,7 @@ The **KeyWriter** app is a fun and creative tool designed to simulate typing cod
 ## Usage
 
 1. **Running the App**:
-   - Execute the `customtyper.py` script.
+   - Execute the `KeyWriter.py` script.
    - The app window will open, allowing you to customize settings.
 
 2. **Customization**:
