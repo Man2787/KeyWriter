@@ -36,7 +36,7 @@ The **KeyWriter** app is a fun and creative tool designed to simulate typing cod
 
 ## Version
 
-**KeyWriter** v1.1.0
+**KeyWriter** v1.1.1
 
 ## Contributing
 

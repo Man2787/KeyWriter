@@ -9,12 +9,12 @@ WINDOWS_LINE_ENDING = "\r\n"
 MAC_OS_OLD_LINE_ENDING = "\r"
 MAC_OS_NEW_LINE_ENDING = "\n"
 
-WLN = "Windows Line Endings (\\r\\n)"
-ULN = "Unix Line Endings (\\n)"
-MOLN = "Mac Old Line Ending(\\r)"
-MNLN = "Mac New Line Ending(\\n)"
+WLE = "Windows Line Endings (\\r\\n)"
+ULE = "Unix Line Endings (\\n)"
+MOLE = "Mac Old Line Ending(\\r)"
+MNLE = "Mac New Line Ending(\\n)"
 
-VERSION = "1.1.0"
+VERSION = "1.1.1"
 
 # keys = "Esse laboris deserunt aute commodo do culpa cillum adipisicing aliqua quis officia nostrud."
 
@@ -60,13 +60,13 @@ def Write():
 
     text = entryText._textbox.get("0.0", customtkinter.END)
 
-    if (endingStyle == WLN):
+    if (endingStyle == WLE):
         text = text.replace(UNIX_LINE_ENDING, WINDOWS_LINE_ENDING)
-    elif (endingStyle == ULN):
+    elif (endingStyle == ULE):
         text = text.replace(UNIX_LINE_ENDING, UNIX_LINE_ENDING)
-    elif (endingStyle == MOLN):
+    elif (endingStyle == MOLE):
         text = text.replace(UNIX_LINE_ENDING, MAC_OS_OLD_LINE_ENDING)
-    elif (endingStyle == MNLN):
+    elif (endingStyle == MNLE):
         text = text.replace(UNIX_LINE_ENDING, MAC_OS_NEW_LINE_ENDING)
     else:
         print("endingStyle not recegonised")
@@ -166,16 +166,40 @@ def Start():
             except AttributeError:
                 startCode = key
 
+            if (startCode == keyboard._Key.esc):
+                startCode = None
+
             if (startCodeLable != None):
-                startCodeLable.configure(require_redraw=True, text=startCode)
+                if (startCode == None):
+                    startCodeLable.configure(
+                        require_redraw=True,
+                        text="None"
+                    )
+                else:
+                    startCodeLable.configure(
+                        require_redraw=True,
+                        text=startCode
+                    )
         else:
             try:
                 endCode = key.char
             except AttributeError:
                 endCode = key
 
+            if (endCode == keyboard._Key.esc):
+                endCode = None
+
             if (endCodeLable != None):
-                endCodeLable.configure(require_redraw=True, text=endCode)
+                if (endCode == None):
+                    endCodeLable.configure(
+                        require_redraw=True,
+                        text="None"
+                    )
+                else:
+                    endCodeLable.configure(
+                        require_redraw=True,
+                        text=endCode
+                    )
 
     def keyDown(key):
         global listening
@@ -260,7 +284,7 @@ def Start():
         height=34,
         corner_radius=5
     )
-    frameFive.pack(pady=(10, 3), padx=10, fill="x", side="top")
+    frameFive.pack(pady=(30, 3), padx=10, fill="x", side="top")
 
     frameSix = customtkinter.CTkFrame(
         master=sidebar_frame,
@@ -269,6 +293,14 @@ def Start():
         corner_radius=5
     )
     frameSix.pack(pady=3, padx=10, fill="x", side="top")
+
+    frameSeven = customtkinter.CTkFrame(
+        master=sidebar_frame,
+        width=180,
+        height=34,
+        corner_radius=5
+    )
+    frameSeven.pack(pady=3, padx=10, fill="x", side="bottom")
 
     # endregion
 
@@ -363,24 +395,24 @@ def Start():
     # region buttons
 
     startButton = customtkinter.CTkButton(
-        master=sidebar_frame,
+        master=frameSeven,
         command=CreateWriteThread,
         text="Start Writing",
-        width=200
+        width=80
     )
-    startButton.pack(pady=(3, 10), padx=10, side="bottom")
+    startButton.pack(pady=3, padx=3, side="left")
 
     stopButton = customtkinter.CTkButton(
-        master=sidebar_frame,
+        master=frameSeven,
         command=StopWriting,
         text="Stop Writing",
-        width=200
+        width=80
     )
-    stopButton.pack(pady=(10, 3), padx=10, side="bottom")
+    stopButton.pack(pady=3, padx=3, side="right")
 
     lineEndingMenu = customtkinter.CTkOptionMenu(
         master=sidebar_frame,
-        values=[WLN, ULN, MOLN, MNLN]
+        values=[WLE, ULE, MOLE, MNLE]
     )
     lineEndingMenu.pack(pady=10, padx=10, side="bottom")
 
