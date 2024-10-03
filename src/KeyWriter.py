@@ -1,6 +1,6 @@
 import customtkinter
 from threading import Thread
-from pynput.keyboard import Controller, Listener
+from pynput.keyboard import Controller, Listener, Key
 from time import sleep
 from random import uniform
 
@@ -121,6 +121,9 @@ def Write():
                   timeBetweenLetters + letterTimeVarince)))
         keysWrote += 1
 
+    if (pressEnterOnEnd.get()):
+        keyboard.press(Key.enter)
+
     stopWriting = False
     typing = False
 
@@ -143,7 +146,7 @@ def StopWriting():
 
 
 def Start():
-    global entryTimeBetweenLetters, entryLetterTimeVarince, entryTimeBetweenSpaces, entrySpaceTimeVarince, entryText, lineEndingMenu, stopCodeLable, startCodeLable
+    global entryTimeBetweenLetters, entryLetterTimeVarince, entryTimeBetweenSpaces, entrySpaceTimeVarince, entryText, lineEndingMenu, stopCodeLable, startCodeLable, pressEnterOnEnd
 
     # Modes: "System" (standard), "Dark", "Light"
     customtkinter.set_appearance_mode("dark")
@@ -238,7 +241,6 @@ def Start():
     app.title("writer")
 
     # region Frames
-
     sidebar_frame = customtkinter.CTkFrame(
         master=app,
         width=200,
@@ -278,6 +280,14 @@ def Start():
     )
     frameFour.pack(pady=3, padx=10, fill="x", side="top")
 
+    frameEight = customtkinter.CTkFrame(
+        master=sidebar_frame,
+        width=180,
+        height=34,
+        corner_radius=5
+    )
+    frameEight.pack(pady=3, padx=10, fill="x", side="top")
+
     frameFive = customtkinter.CTkFrame(
         master=sidebar_frame,
         width=180,
@@ -301,11 +311,9 @@ def Start():
         corner_radius=5
     )
     frameSeven.pack(pady=3, padx=10, fill="x", side="bottom")
-
     # endregion
 
     # region customization lables
-
     entryTimeBetweenLettersLable = customtkinter.CTkLabel(
         master=frameOne,
         text="Time Between Letters"
@@ -353,11 +361,9 @@ def Start():
         text="None"
     )
     endCodeLable.pack(pady=3, padx=5, side="right")
-
     # endregion
 
     # region customization entrys
-
     entryTimeBetweenLetters = customtkinter.CTkEntry(
         master=frameOne,
         width=40,
@@ -389,10 +395,14 @@ def Start():
         textvariable=customtkinter.StringVar(master=app, value="0.2")
     )
     entrySpaceTimeVarince.pack(pady=3, padx=5, side="right")
-
     # endregion
 
     # region buttons
+    pressEnterOnEnd = customtkinter.CTkCheckBox(
+        master=frameEight,
+        text="Press enter when finished"
+    )
+    pressEnterOnEnd.pack(pady=3, padx=5, side="left")
 
     startButton = customtkinter.CTkButton(
         master=frameSeven,
@@ -431,7 +441,6 @@ def Start():
         width=20
     )
     setEndButton.pack(pady=3, padx=3, side="left")
-
     # endregion
 
     lable = customtkinter.CTkLabel(
